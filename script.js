@@ -12,43 +12,39 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
-
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // ১. লগইন বাটন ক্লিক
 document.getElementById('google-login-btn').addEventListener('click', () => {
+    // Redirect পদ্ধতি সবচেয়ে নিরাপদ
     auth.signInWithRedirect(provider);
 });
 
-// ২. রিডাইরেক্ট রেজাল্ট চেক (এটি পেজ লোড হওয়ার সময় অটো চলে)
-auth.getRedirectResult()
-    .then((result) => {
-        if (result.user) {
-            console.log("Logged in:", result.user.displayName);
-        }
-    })
-    .catch((error) => {
-        console.error("Login Error:", error.message);
-        // alert("Error: " + error.message);
-    });
+// ২. রিডাইরেক্ট হওয়ার পর ইউজারের তথ্য চেক করা
+auth.getRedirectResult().then((result) => {
+    if (result.user) {
+        console.log("User logged in after redirect");
+    }
+}).catch((error) => {
+    console.error("Redirect Login Error:", error.message);
+});
 
 // ৩. লগআউট বাটন
 document.getElementById('logout-btn').addEventListener('click', () => {
     auth.signOut().then(() => {
-        alert("Logged out successfully!");
         window.location.reload(); 
     });
 });
 
-// ৪. ইউজারের স্টেট পর্যবেক্ষণ (সবচেয়ে গুরুত্বপূর্ণ অংশ)
+// ৪. ইউজারের স্টেট পরিবর্তন হ্যান্ডেল করা (Main Dashboard Control)
 auth.onAuthStateChanged((user) => {
     const loginPage = document.getElementById('login-page');
     const dashboardPage = document.getElementById('dashboard-page');
     const navBar = document.getElementById('nav-bar');
 
     if (user) {
-        // লগইন থাকলে যা হবে
+        // লগইন থাকলে
         loginPage.classList.add('hidden');
         dashboardPage.classList.remove('hidden');
         if (navBar) navBar.classList.remove('hidden');
@@ -56,11 +52,12 @@ auth.onAuthStateChanged((user) => {
         document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
         document.getElementById('user-photo').src = user.photoURL;
     } else {
-        // লগআউট থাকলে যা হবে
+        // লগআউট থাকলে
         loginPage.classList.remove('hidden');
         dashboardPage.classList.add('hidden');
         if (navBar) navBar.classList.add('hidden');
     }
 });
+
 
 
