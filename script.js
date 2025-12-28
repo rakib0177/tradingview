@@ -1,6 +1,3 @@
- 
-
-// আপনার Firebase Config এখানে বসান (Firebase Console থেকে পাবেন)
 const firebaseConfig = {
     apiKey: "AIzaSyCvW1eM0TD2afTBDWWqmSHksQbm3Esjl2I",
     authDomain: "tradingviews-77.firebaseapp.com",
@@ -11,92 +8,59 @@ const firebaseConfig = {
     measurementId: "G-BTR2FS9EY5"
 };
 
-// Firebase Initialize
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase once
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// লগইন বাটন ক্লিক ইভেন্ট
+// ১. লগইন বাটন ক্লিক
 document.getElementById('google-login-btn').addEventListener('click', () => {
-    // পপ-আপের বদলে রিডাইরেক্ট মেথড ব্যবহার
     auth.signInWithRedirect(provider);
 });
 
-       auth.getRedirectResult()
+// ২. রিডাইরেক্ট রেজাল্ট চেক (এটি পেজ লোড হওয়ার সময় অটো চলে)
+auth.getRedirectResult()
     .then((result) => {
         if (result.user) {
-            console.log("Redirect Login Success:", result.user.displayName);
-            showDashboard(result.user);
+            console.log("Logged in:", result.user.displayName);
         }
     })
     .catch((error) => {
-        if (error.code !== 'auth/none') {
-            console.error("Login Error:", error.message);
-            alert("লগইন করতে সমস্যা হয়েছে: " + error.message);
-        }
+        console.error("Login Error:", error.message);
+        // alert("Error: " + error.message);
     });
 
-// লগ আউট ফাংশন
-document.getElementById('logout-btn').addEventListener('click', () => {
-    auth.signOut().then(() => {
-        location.reload(); // পেজ রিলোড করে লগইন স্ক্রিনে ফিরিয়ে নেবে
-    });
-});
-
-// ড্যাশবোর্ড দেখানোর ফাংশন
-function showDashboard(user) {
-    document.getElementById('login-page').classList.add('hidden');
-    document.getElementById('dashboard-page').classList.remove('hidden');
-    document.getElementById('nav-bar').classList.remove('hidden');
-
-    // ইউজারের তথ্য আপডেট করা
-    document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
-    document.getElementById('user-photo').src = user.photoURL;
-}
-
-// ইউজার আগে থেকেই লগইন আছে কিনা চেক করা
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        showDashboard(user);
-    }
-});
-
-
-
-// Check if user is already logged in
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        showDashboard(user);
-    }
-});
-
-
-// ইউজারের স্টেট চেক করা (লগইন আছে কি না)
-auth.onAuthStateChanged((user) => {
-    const loginPage = document.getElementById('login-page');
-    const dashboardPage = document.getElementById('dashboard-page');
-    const navBar = document.getElementById('nav-bar');
-    
-   if (user) {
-        // ইউজার লগইন থাকলে ড্যাশবোর্ড দেখাবে
-        loginPage.classList.add('hidden');
-        dashboardPage.classList.remove('hidden');
-        if(navBar) navBar.classList.remove('hidden');
-
-        document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
-        document.getElementById('user-photo').src = user.photoURL;
-    } else {
-        // ইউজার লগআউট থাকলে
-       loginPage.classList.remove('hidden');
-        dashboardPage.classList.add('hidden');
-        if(navBar) navBar.classList.add('hidden');
-    }
-});
-// লগআউট বাটন ক্লিক ইভেন্ট
+// ৩. লগআউট বাটন
 document.getElementById('logout-btn').addEventListener('click', () => {
     auth.signOut().then(() => {
         alert("Logged out successfully!");
         window.location.reload(); 
     });
 });
+
+// ৪. ইউজারের স্টেট পর্যবেক্ষণ (সবচেয়ে গুরুত্বপূর্ণ অংশ)
+auth.onAuthStateChanged((user) => {
+    const loginPage = document.getElementById('login-page');
+    const dashboardPage = document.getElementById('dashboard-page');
+    const navBar = document.getElementById('nav-bar');
+
+    if (user) {
+        // লগইন থাকলে যা হবে
+        loginPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+        if (navBar) navBar.classList.remove('hidden');
+
+        document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
+        document.getElementById('user-photo').src = user.photoURL;
+    } else {
+        // লগআউট থাকলে যা হবে
+        loginPage.classList.remove('hidden');
+        dashboardPage.classList.add('hidden');
+        if (navBar) navBar.classList.add('hidden');
+    }
+});
+
 
