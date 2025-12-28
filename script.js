@@ -1,4 +1,3 @@
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCvW1eM0TD2afTBDWWqmSHksQbm3Esjl2I",
     authDomain: "tradingviews-77.firebaseapp.com",
@@ -17,46 +16,54 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// ১. লগইন বাটন ক্লিক (Redirect Method - এটি মোবাইল ও গিটহাবের জন্য বেস্ট)
+// ১. লগইন বাটন ক্লিক ইভেন্ট (Popup মেথড গিটহাবের জন্য সহজে কাজ করে)
 const loginBtn = document.getElementById('google-login-btn');
 if (loginBtn) {
     loginBtn.onclick = () => {
-        console.log("Login button clicked...");
-        auth.signInWithRedirect(provider);
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                console.log("Login Successful:", result.user.displayName);
+                // আলাদা করে রিডাইরেক্ট করার দরকার নেই, onAuthStateChanged এটি হ্যান্ডেল করবে
+            })
+            .catch((error) => {
+                console.error("Login Error:", error.message);
+                alert("লগইন সমস্যা: " + error.message);
+            });
     };
 }
 
-// ২. লগআউট বাটন ক্লিক
+// ২. লগআউট বাটন ইভেন্ট
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) {
     logoutBtn.onclick = () => {
         auth.signOut().then(() => {
-            window.location.reload();
+            console.log("Logged out");
         });
     };
 }
 
-// ৩. লগইন স্টেট চেক (এই একটি ফাংশনই সব হ্যান্ডেল করবে)
+// ৩. মেইন ফাংশন: ইউজারের অবস্থার পরিবর্তন পর্যবেক্ষণ করা
 auth.onAuthStateChanged((user) => {
     const loginPage = document.getElementById('login-page');
     const dashboardPage = document.getElementById('dashboard-page');
     const navBar = document.getElementById('nav-bar');
 
     if (user) {
-        console.log("User Logged In:", user.displayName);
-        if(loginPage) loginPage.classList.add('hidden');
-        if(dashboardPage) dashboardPage.classList.remove('hidden');
-        if(navBar) navBar.classList.remove('hidden');
+        // ইউজার লগইন থাকলে
+        loginPage.classList.add('hidden');
+        dashboardPage.classList.remove('hidden');
+        if (navBar) navBar.classList.remove('hidden');
 
         document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
         document.getElementById('user-photo').src = user.photoURL;
     } else {
-        console.log("No User Logged In.");
-        if(loginPage) loginPage.classList.remove('hidden');
-        if(dashboardPage) dashboardPage.classList.add('hidden');
-        if(navBar) navBar.classList.add('hidden');
+        // ইউজার লগআউট থাকলে
+        loginPage.classList.remove('hidden');
+        dashboardPage.classList.add('hidden');
+        if (navBar) navBar.classList.add('hidden');
     }
 });
+
 
 
 
