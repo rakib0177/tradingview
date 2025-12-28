@@ -1,3 +1,4 @@
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCvW1eM0TD2afTBDWWqmSHksQbm3Esjl2I",
     authDomain: "tradingviews-77.firebaseapp.com",
@@ -8,56 +9,55 @@ const firebaseConfig = {
     measurementId: "G-BTR2FS9EY5"
 };
 
-// Initialize Firebase once
+// Initialize Firebase
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
+
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// ১. লগইন বাটন ক্লিক
-document.getElementById('google-login-btn').addEventListener('click', () => {
-    // Redirect পদ্ধতি সবচেয়ে নিরাপদ
-    auth.signInWithRedirect(provider);
-});
+// ১. লগইন বাটন ক্লিক (Redirect Method - এটি মোবাইল ও গিটহাবের জন্য বেস্ট)
+const loginBtn = document.getElementById('google-login-btn');
+if (loginBtn) {
+    loginBtn.onclick = () => {
+        console.log("Login button clicked...");
+        auth.signInWithRedirect(provider);
+    };
+}
 
-// ২. রিডাইরেক্ট হওয়ার পর ইউজারের তথ্য চেক করা
-auth.getRedirectResult().then((result) => {
-    if (result.user) {
-        console.log("User logged in after redirect");
-    }
-}).catch((error) => {
-    console.error("Redirect Login Error:", error.message);
-});
+// ২. লগআউট বাটন ক্লিক
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+    logoutBtn.onclick = () => {
+        auth.signOut().then(() => {
+            window.location.reload();
+        });
+    };
+}
 
-// ৩. লগআউট বাটন
-document.getElementById('logout-btn').addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.reload(); 
-    });
-});
-
-// ৪. ইউজারের স্টেট পরিবর্তন হ্যান্ডেল করা (Main Dashboard Control)
+// ৩. লগইন স্টেট চেক (এই একটি ফাংশনই সব হ্যান্ডেল করবে)
 auth.onAuthStateChanged((user) => {
     const loginPage = document.getElementById('login-page');
     const dashboardPage = document.getElementById('dashboard-page');
     const navBar = document.getElementById('nav-bar');
 
     if (user) {
-        // লগইন থাকলে
-        loginPage.classList.add('hidden');
-        dashboardPage.classList.remove('hidden');
-        if (navBar) navBar.classList.remove('hidden');
+        console.log("User Logged In:", user.displayName);
+        if(loginPage) loginPage.classList.add('hidden');
+        if(dashboardPage) dashboardPage.classList.remove('hidden');
+        if(navBar) navBar.classList.remove('hidden');
 
         document.getElementById('welcome-text').innerText = "Hi, " + user.displayName;
         document.getElementById('user-photo').src = user.photoURL;
     } else {
-        // লগআউট থাকলে
-        loginPage.classList.remove('hidden');
-        dashboardPage.classList.add('hidden');
-        if (navBar) navBar.classList.add('hidden');
+        console.log("No User Logged In.");
+        if(loginPage) loginPage.classList.remove('hidden');
+        if(dashboardPage) dashboardPage.classList.add('hidden');
+        if(navBar) navBar.classList.add('hidden');
     }
 });
+
 
 
 
