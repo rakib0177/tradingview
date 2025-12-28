@@ -1,0 +1,146 @@
+body {
+    background: linear-gradient(135deg, #f603d6, #2b2ffe, #f20303);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(247, 247, 247);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.glass-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.main-btn {
+    background: white;
+    color: #333;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    transition: 0.3s;
+}
+
+.main-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Dashboard Styles */
+.user-header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.scroll-area {
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 5px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.card-info {
+    margin-left: 15px;
+    text-align: left;
+}
+
+/* #journal-editor {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    outline: none;
+} */
+
+.nav-panel {
+    position: fixed;
+    bottom: 25px;
+    width: 85%;
+    max-width: 400px;
+    background: rgba(240, 233, 233, 0.2);
+    backdrop-filter: blur(1px);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border: 5px solid rgba(0, 255, 4, 0.1);
+}
+
+.nav-item {
+    color: rgb(33, 37, 5);
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.nav-item:hover {
+    opacity: 1;
+    color: #04fc25;
+}
+
+.hidden {
+    display: none !important;
+}

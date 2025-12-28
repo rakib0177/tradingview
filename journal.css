@@ -1,0 +1,194 @@
+/* body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+} */
+body {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    /* Dark color for better visibility */
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    /* Screen-er baire kichu jabe na */
+    margin: 0;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    /* Screen-er 90% height er bhetore thakbe */
+    background: linear-gradient(135deg, #28f940, #f93c03, #f903e8);
+    /* Bhetorer background white rakhle scroll sundor lage */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    /* Content niche niche sajano */
+}
+
+/* Journal list area jeta scroll hobe */
+#entriesContainer {
+    flex-grow: 1;
+    overflow-y: auto;
+    /* Sudhu list-tuku scroll hobe */
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+/* Scrollbar-ke sundor korar jonyo */
+#entriesContainer::-webkit-scrollbar {
+    width: 5px;
+}
+
+#entriesContainer::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Baki Design gulo thik ache */
+textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.entry-item {
+    background: #fff9e6;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-left: 5px solid #ffc107;
+    border-radius: 4px;
+    color: #333;
+    position: relative;
+}
+
+.delete-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+    font-size: 11px;
+}
+
+.entry-img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.entry-img:hover {
+    opacity: 0.8;
+}
+
+/* Modal CSS */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+}
+
+.journal-list {
+    flex-grow: 1;
+    /* Baki jayga tuku nibe */
+    overflow-y: auto;
+    /* Jodi list boro hoy tobe ekhane scrollbar asbe */
+    margin-top: 10px;
+    padding-right: 5px;
+}
+
+/* Scrollbar ke ektu sundor dekhanor jonyo (Optional) */
+.journal-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.journal-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.nav-panel {
+    position: fixed;
+    bottom: 25px;
+    width: 85%;
+    max-width: 400px;
+    background: rgba(240, 233, 233, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border: 5px solid rgba(0, 255, 4, 0.1);
+}
+
+.nav-item {
+    color: rgb(5, 17, 253);
+    text-decoration: none;
+    font-size: 15px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.nav-item:hover {
+    opacity: 1;
+    color: #04fc25;
+}

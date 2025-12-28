@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRADING AND ANALYSIS </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+
+
+
+    <div id="login-page" class="glass-box">
+        <div class="logo-circle">🔥</div>
+        <h2>Welcome Back</h2>
+        <p>Login with your Google account</p>
+        <button id="google-login-btn" class="main-btn">
+            <img src="google.png" width="20">
+            Login with Google
+        </button>
+    </div>
+
+    <div id="dashboard-page" class="dashboard glass-box hidden">
+        <div class="user-header">
+            <img id="user-photo" src="" alt="Profile">
+            <h2 id="welcome-text">Loading...</h2>
+            <button id="logout-btn"
+                style="background: rgba(8, 0, 255, 0.2); color: white; border: 1px solid rgb(100, 48, 48); border-radius: 5px; cursor: pointer; padding: 5px 10px;">Logout</button>
+        </div>
+
+
+
+        <div class="scroll-area">
+            <a href="https://one.exnessonelink.com/a/dspeil2bn3" target="_blank" class="card">
+                <img src="exness.jpg" class="icon">
+                <div class="card-info">
+                    <h3>Exness Broker</h3>
+                    <span>Trade Now. Forex, Gold, Crypto</span>
+                </div>
+            </a>
+
+            <a href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00DLRXCKP3&utm_source=electron"
+                target="_blank" class="card">
+                <img src="binance.png" class="icon">
+                <div class="card-info">
+
+                    <h3>Binance</h3>
+                    <span>Exchange Crypto and Best Deosit</span>
+                </div>
+            </a>
+
+            <a href="https://www.tradingview.com/chart/XspxDMe0/" target="_blank" class="card">
+                <img src="tradingview.png" class="icon">
+                <div class="card-info">
+                    <h3>Trading View</h3>
+                    <span>Market Analysis</span>
+                </div>
+            </a>
+
+            <a href="https://www.tradingview.com/chart/XspxDMe0/" target="_blank" class="card">
+                <img src="telegram.png" class="icon">
+                <div class="card-info">
+                    <h3>Join Giveweay</h3>
+                    <span>Make Your Wish and professional trader</span>
+                </div>
+            </a>
+
+            <!-- <a href="/" target="_blank" class="card">
+                <img src="telegram.png" class="icon">
+                <div class="card-info">
+                    <h3>Daily Journal Entry</h3>
+                    <span>Daily journal entry make you a professional trader</span>
+                </div>
+            </a> -->
+
+            <!-- 
+            <div class="card journal-section">
+                <h3>📝 Trading Journal</h3>
+                <div id="journal-editor" contenteditable="true" placeholder="Write your thoughts here..."></div>
+                <button class="save-btn">Save Entry</button>
+            </div> -->
+
+            <div class="card">
+                <h3>👤 Bio</h3>
+                <p id="user-bio">Professional Trader & Tech Enthusiast. Focused on market analysis and growth.</p>
+            </div>
+        </div>
+    </div>
+
+    <nav id="nav-bar" class="nav-panel hidden">
+        <a href="index.html" class="nav-item"><b>🏠<br>Home</b></a>
+        <a href="journal.html" class="nav-item"><b>👤<br>Journal</b></a>
+        <a href="#" class="nav-item"><b>📊<br>Chart</b></a>
+        <a href="#" class="nav-item"><b>🎥<br>Learn</b></a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="script.js"></script>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

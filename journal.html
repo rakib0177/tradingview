@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Daily Journal</title>
+    <link rel="stylesheet" href="journal.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Daily Journal</h1>
+
+        <div class="input-section">
+            <textarea id="journalInput" placeholder="please Enter your journal?"></textarea>
+            <input type="file" id="imageInput" accept="image/*" style="margin-bottom: 10px;">
+            <button onclick="saveEntry()">Save Entry</button>
+        </div>
+
+        <div id="imgModal" class="modal" onclick="this.style.display='none'">
+            <img class="modal-content" id="modalImg">
+        </div>
+
+
+        <!-- <div class="input-section">
+            <textarea id="journalInput" placeholder="Ajker din kemon katlo?"></textarea>
+            <button onclick="saveEntry()">Save Entry</button>
+        </div> -->
+        <br>
+        <div class="search-section">
+            <input type="text" id="searchInput" onkeyup="searchEntries()" placeholder="Search your journal...">
+        </div>
+
+        <div class="journal-list">
+            <h2>Previous Entries</h2>
+            <div id="entriesContainer"></div>
+        </div>
+
+    </div>
+
+    <nav id="nav-bar" class="nav-panel hidden">
+        <a href="index.html" class="nav-item">🏠<br>Home</a>
+        <a href="journal.html" class="nav-item">👤<br>Journal</a>
+        <a href="#" class="nav-item">📊<br>Chart</a>
+        <a href="#" class="nav-item">🎥<br>Video</a>
+    </nav>
+
+    <script src="journal.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="journal.js"></script>
+</body>
+
+</html>
