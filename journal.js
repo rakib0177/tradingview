@@ -1,90 +1,99 @@
-// ১. ফায়ারবেস ডেটাবেস (Firestore) ইনিশিয়ালাইজ করা
-const db = firebase.firestore();
+document.addEventListener("DOMContentLoaded", displayEntries);
 
-// ২. জার্নাল সেভ করার ফাংশন
+function saveEntry() {
+    const text = document.getElementById("journalInput").value;
+    if (text.trim() === "") return alert("please enter your journal !");
+
+    const date = new Date().toLocaleString();
+    const entry = { text, date };
+
+    let entries = JSON.parse(localStorage.getItem("myJournal")) || [];
+    entries.unshift(entry);
+    localStorage.setItem("myJournal", JSON.stringify(entries));
+
+    document.getElementById("journalInput").value = "";
+    displayEntries();
+}
+
+function displayEntries() {
+    const container = document.getElementById("entriesContainer");
+    const entries = JSON.parse(localStorage.getItem("myJournal")) || [];
+    container.innerHTML = "";
+
+    entries.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("entry-item");
+        div.innerHTML = `
+            <button class="delete-btn" onclick="deleteEntry(${index})">Delete</button>
+            <div class="entry-date">${item.date}</div>
+            <div class="entry-text">${item.text}</div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// DELETE Function
+function deleteEntry(index) {
+    if (confirm("Tumi ki eti delete korte chao?")) {
+        let entries = JSON.parse(localStorage.getItem("myJournal")) || [];
+        entries.splice(index, 1);
+        localStorage.setItem("myJournal", JSON.stringify(entries));
+        displayEntries();
+    }
+}
+
+// SEARCH Function
+function searchEntries() {
+    const term = document.getElementById("searchInput").value.toLowerCase();
+    const items = document.querySelectorAll(".entry-item");
+
+    items.forEach(item => {
+        const content = item.innerText.toLowerCase();
+        if (content.includes(term)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
+}
+
+
+
+
+
+
+// image save 
+
+
 async function saveEntry() {
-    const user = firebase.auth().currentUser;
-    if (!user) return alert("দয়া করে আগে লগইন করুন!");
-
     const text = document.getElementById("journalInput").value;
     const imgFile = document.getElementById("imageInput").files[0];
-
-    if (text.trim() === "" && !imgFile) return alert("কিছু লিখুন অথবা ছবি দিন!");
+    if (text.trim() === "" && !imgFile) return alert("please enter text and image!");
 
     let imgData = "";
     if (imgFile) {
-        // ইমেজকে টেক্সটে (Base64) রূপান্তর করা
         imgData = await toBase64(imgFile);
     }
 
-    const entry = {
-        userId: user.uid, // ইউজারের ইউনিক আইডি যাতে ডাটা আলাদা থাকে
-        text: text,
-        date: new Date().toLocaleString(),
-        img: imgData,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp() // সময় অনুযায়ী সাজানোর জন্য
-    };
+    const date = new Date().toLocaleString();
+    const entry = { text, date, img: imgData };
 
-    try {
-        // 'journals' নামে কালেকশনে ডাটা সেভ করা
-        await db.collection("journals").add(entry);
-        document.getElementById("journalInput").value = "";
-        document.getElementById("imageInput").value = "";
-        alert("জার্নাল সেভ হয়েছে!");
-        displayEntries(); // নতুন তালিকা দেখানো
-    } catch (error) {
-        console.error("Error saving entry: ", error);
-        alert("সেভ করতে সমস্যা হয়েছে!");
-    }
+    let entries = JSON.parse(localStorage.getItem("myJournal")) || [];
+    entries.unshift(entry);
+    localStorage.setItem("myJournal", JSON.stringify(entries));
+
+    document.getElementById("journalInput").value = "";
+    document.getElementById("imageInput").value = ""; // Clear file input
+    displayEntries();
 }
 
-// ৩. ডাটা দেখানোর ফাংশন (Firestore থেকে অনলাইনে আসবে)
-function displayEntries() {
-    const user = firebase.auth().currentUser;
-    if (!user) return;
-
-    const container = document.getElementById("entriesContainer");
-
-    // শুধু বর্তমান ইউজারের ডাটা ফিল্টার করে আনা
-    db.collection("journals")
-        .where("userId", "==", user.uid)
-        .orderBy("timestamp", "desc")
-        .get()
-        .then((querySnapshot) => {
-            container.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const item = doc.data();
-                const docId = doc.id; // ডিলিট করার জন্য ইউনিক আইডি
-
-                const div = document.createElement("div");
-                div.classList.add("entry-item");
-                div.innerHTML = `
-                    <button class="delete-btn" onclick="deleteEntry('${docId}')">Delete</button>
-                    <div class="entry-date">${item.date}</div>
-                    <div class="entry-text">${item.text}</div>
-                    ${item.img ? `<img src="${item.img}" class="entry-img" onclick="viewImage('${item.img}')">` : ''}
-                `;
-                container.appendChild(div);
-            });
-        })
-        .catch((error) => {
-            console.error("Error getting entries: ", error);
-        });
+// Image View Function
+function viewImage(src) {
+    document.getElementById("imgModal").style.display = "flex";
+    document.getElementById("modalImg").src = src;
 }
 
-// ৪. ডিলিট ফাংশন
-async function deleteEntry(docId) {
-    if (confirm("আপনি কি এটি ডিলিট করতে চান?")) {
-        try {
-            await db.collection("journals").doc(docId).delete();
-            displayEntries();
-        } catch (error) {
-            alert("ডিলিট করতে সমস্যা হয়েছে!");
-        }
-    }
-}
-
-// ৫. ইমেজ কনভার্টার (Base64)
+// Convert image to String to save in LocalStorage
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -92,15 +101,24 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
-// ৬. পেজ লোড হলে বা লগইন থাকলে ডাটা দেখাও
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        displayEntries();
-    } else {
-        const container = document.getElementById("entriesContainer");
-        if (container) container.innerHTML = "লগইন করুন আপনার জার্নাল দেখতে।";
-    }
-});
+function displayEntries() {
+    const container = document.getElementById("entriesContainer");
+    const entries = JSON.parse(localStorage.getItem("myJournal")) || [];
+    container.innerHTML = "";
+
+    entries.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("entry-item");
+        div.innerHTML = `
+            <button class="delete-btn" onclick="deleteEntry(${index})">Delete</button>
+            <div class="entry-date">${item.date}</div>
+            <div class="entry-text">${item.text}</div>
+            ${item.img ? `<img src="${item.img}" class="entry-img" onclick="viewImage('${item.img}')">` : ''}
+        `;
+        container.appendChild(div);
+    });
+}
+
 
 
 
