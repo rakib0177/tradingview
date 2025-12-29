@@ -4,16 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRADING AND ANALYSIS </title>
+    <title>TRADING AND ANALYSIS</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 
-
 <body>
-
-
-
 
     <div id="login-page" class="glass-box">
         <div class="logo-circle">🔥</div>
@@ -27,15 +24,47 @@
 
     <div id="dashboard-page" class="dashboard glass-box hidden">
         <div class="user-header">
-            <img id="user-photo" src="" alt="Profile">
-            <h2 id="welcome-text">Loading...</h2>
+            <div class="user-info">
+                <img id="user-photo" src="" alt="Profile"
+                    style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff;">
+                <h2 id="welcome-text" style="margin-left: 12px; font-size: 1.2rem;">Loading...</h2>
+
+
+            </div>
             <button id="logout-btn"
                 style="background: rgba(8, 0, 255, 0.2); color: white; border: 1px solid rgb(100, 48, 48); border-radius: 5px; cursor: pointer; padding: 5px 10px;">Logout</button>
+
+
+
+            <div class="menu-container">
+                <div class="dots-icon" onclick="toggleMenu()">⋮</div>
+
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="https://www.coinglass.com/pro/futures/LiquidationMap">All Currenchy Liquidity chack</a>
+                    <a href="https://www.babypips.com/tools/forex-market-hours">Session Chack</a>
+                    <!-- <a href="https://www.coinglass.com/pro/futures/LiquidationMap"> Gold Liquidity chack</a> -->
+                    <!-- <a href="#"> Bitcoin Liquidity chack</a> -->
+                    <!-- <a href="https://www.coinglass.com/pro/futures/LiquidationMap"> Gold Liquidity chack</a> -->
+
+
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 0;">
+
+                </div>
+
+            </div>
         </div>
 
 
 
+
+
+        <!-- broker area -->
+
+
+
         <div class="scroll-area">
+
+
             <a href="https://one.exnessonelink.com/a/dspeil2bn3" target="_blank" class="card">
                 <img src="exness.jpg" class="icon">
                 <div class="card-info">
@@ -44,15 +73,25 @@
                 </div>
             </a>
 
+            <a href="https://www.xmglobal.com/referral?token=b4iC64-RwI5_Gqx0Wkdy9A" target="_blank" class="card">
+                <img src="xm.jpg" class="icon">
+                <div class="card-info">
+                    <h3>XM Broker</h3>
+                    <span>Trade Now. Forex, Gold, Crypto</span>
+                </div>
+            </a>
+
+
             <a href="https://www.binance.com/activity/referral-entry/CPA?ref=CPA_00DLRXCKP3&utm_source=electron"
                 target="_blank" class="card">
                 <img src="binance.png" class="icon">
                 <div class="card-info">
-
                     <h3>Binance</h3>
-                    <span>Exchange Crypto and Best Deosit</span>
+                    <span>Exchange Crypto and Best Deposit</span>
                 </div>
             </a>
+
+
 
             <a href="https://www.tradingview.com/chart/XspxDMe0/" target="_blank" class="card">
                 <img src="tradingview.png" class="icon">
@@ -62,33 +101,20 @@
                 </div>
             </a>
 
-            <a href="https://www.tradingview.com/chart/XspxDMe0/" target="_blank" class="card">
+            <a href="https://t.me/insidetraderr7" target="_blank" class="card">
                 <img src="telegram.png" class="icon">
                 <div class="card-info">
-                    <h3>Join Giveweay</h3>
+                    <h3>Join Giveaway</h3>
                     <span>Make Your Wish and professional trader</span>
                 </div>
             </a>
-
-            <!-- <a href="/" target="_blank" class="card">
-                <img src="telegram.png" class="icon">
-                <div class="card-info">
-                    <h3>Daily Journal Entry</h3>
-                    <span>Daily journal entry make you a professional trader</span>
-                </div>
-            </a> -->
-
-            <!-- 
-            <div class="card journal-section">
-                <h3>📝 Trading Journal</h3>
-                <div id="journal-editor" contenteditable="true" placeholder="Write your thoughts here..."></div>
-                <button class="save-btn">Save Entry</button>
-            </div> -->
 
             <div class="card">
                 <h3>👤 Bio</h3>
                 <p id="user-bio">Professional Trader & Tech Enthusiast. Focused on market analysis and growth.</p>
             </div>
+
+            <br><br><br><br><br>
         </div>
     </div>
 
@@ -96,18 +122,45 @@
         <a href="index.html" class="nav-item"><b>🏠<br>Home</b></a>
         <a href="journal.html" class="nav-item"><b>👤<br>Journal</b></a>
         <a href="#" class="nav-item"><b>📊<br>Chart</b></a>
+        <a href="https://www.forexfactory.com/" class="nav-item"><b>📊<br>NEWS</b></a>
         <a href="#" class="nav-item"><b>🎥<br>Learn</b></a>
     </nav>
 
-      <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script>
+        // Menu Toggle Function
+        function toggleMenu() {
+            document.getElementById("dropdown-menu").classList.toggle("show");
+        }
+
+        // Close menu when clicking outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.dots-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        // Logout Link (Optional: Connect to your existing logout logic)
+        document.getElementById('logout-btn-menu').addEventListener('click', function () {
+            // Apnar login.js ba script.js er logout function ekhane call korun
+            alert('Logging out...');
+            // firebase.auth().signOut(); // Jodi firebase thake
+        });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
-
     <script src="login.js"></script>
 </body>
 
-
 </html>
+
 
 
 
