@@ -103,16 +103,7 @@ body {
     text-align: left;
 }
 
-/* #journal-editor {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    min-height: 100px;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px 0;
-    text-align: left;
-    outline: none;
-} */
+ 
 
 .nav-panel {
     position: fixed;
@@ -143,4 +134,91 @@ body {
 
 .hidden {
     display: none !important;
+
 }
+
+/* Extra CSS for the Big Right-Side Menu */
+.user-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.dots-icon {
+    font-size: 40px;
+    /* Icon size boro kora hoyeche */
+    cursor: pointer;
+    color: rgb(251, 249, 249);
+    padding: 5px 15px;
+    line-height: 1;
+    transition: 0.3s;
+}
+
+.dots-icon:hover {
+    background: rgba(241, 2, 6, 0.1);
+    border-radius: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 55px;
+    background: #333;
+    backdrop-filter: blur(15px);
+    min-width: 200px;
+    /* Menu boro kora hoyeche */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 18px 20px;
+    /* Click area boro */
+    text-decoration: none;
+    display: block;
+    font-size: 17px;
+    /* Text boro */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.2s;
+}
+
+.dropdown-content a:hover {
+    background: rgba(3, 255, 100, 0.24);
+    padding-left: 25px;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.show {
+    display: block !important;
+}
+
+
